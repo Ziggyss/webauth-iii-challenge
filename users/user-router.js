@@ -44,6 +44,28 @@ router.post("/login", (req, res) => {
     });
 });
 
+router.get("/users", (req, res) => {
+  const token = req.headers.authorization;
+  if (token) {
+    jwt.verify(token, "THIS IS THE SECRET", (err, decodedToken) => {
+      if (err) {
+        res.status(401).json({ message: "bad token" + err.message });
+      } else {
+        req.decodedToken = decodedToken;
+        Users.find()
+          .then(users => res.status(200).json(users))
+          .catch(err =>
+            res.status(500).json({
+              message: err.message
+            })
+          );
+      }
+    });
+  } else {
+    res.status(400).json({ message: "You shall not pass!" });
+  }
+});
+
 function generateToken(user) {
   const payload = {
     subject: user.id,
