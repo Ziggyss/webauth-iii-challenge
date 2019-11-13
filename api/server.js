@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 const Users = require('../users/user-model');
 
 // const authRouter = require('../auth/auth-router.js');
-// const userRouter = require('../users/user-router.js');
+const userRouter = require('../users/user-router.js');
 
 const server = express();
 
@@ -20,24 +20,7 @@ server.get('/', (req, res) => {
   res.send("It's alive!");
 });
 
-server.post("/api/register", (req, res) => {
-  const { username, password } = req.body;
-  const hash = bcrypt.hashSync(password, 11);
-  const newUser = {
-    username,
-    password: hash
-  };
-
-  Users.add(newUser)
-    .then(saved => {
-      res.status(201).json(saved);
-    })
-    .catch(error => {
-      res.status(500).json({
-        message: "There was an error adding the user: " + error.message
-      });
-    });
-});
+server.use("/api", userRouter)
 
 
 module.exports = server;
