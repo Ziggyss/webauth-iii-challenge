@@ -20,9 +20,11 @@
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "formik": "^2.0.4",
     "helmet": "^3.21.2",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.20.1",
+    "react": "^16.11.0",
     "sqlite3": "^4.1.0"
   }
 }
