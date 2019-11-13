@@ -52,7 +52,8 @@ router.get("/users", (req, res) => {
         res.status(401).json({ message: "bad token" + err.message });
       } else {
         req.decodedToken = decodedToken;
-        Users.find()
+        const { department } = req.body;
+        Users.findBy({department})
           .then(users => res.status(200).json(users))
           .catch(err =>
             res.status(500).json({
